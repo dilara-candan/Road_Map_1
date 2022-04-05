@@ -1,11 +1,28 @@
+def sayiKontrol (value, type = None):
+    if (not(value.isdigit())):
+        return sayiKontrol(input("Tekrar giriniz:"), type)    
+
+    value = int(value)
+
+    if (
+        (type == "harfNotu" and value >= 0 and value <= 100) or 
+        (type == "menu" and value > 0 and value < 4) or
+        type == None
+        ):
+        return value
+    
+    return sayiKontrol(input("Tekrar giriniz:"), type)
+
 def bolunenSayiBulma (min_sayi, max_sayi, bolunecek_sayi):
     tamBolunenler = []
 
     if (min_sayi >= max_sayi):
-        print("Girilen değerler validate değil.")
+        print("Minimum sayı maximum sayıdan büyük veya eşit olamaz.")
 
-    for i in range(min_sayi, max_sayi):
-        if (bolunecek_sayi % i == 0):
+        return "";
+
+    for i in range(min_sayi, max_sayi + 1):
+        if (i % bolunecek_sayi == 0):
             tamBolunenler.append(i)
     
     return {
@@ -14,17 +31,17 @@ def bolunenSayiBulma (min_sayi, max_sayi, bolunecek_sayi):
     };
 
 def sayiOkunusu(sayi):
+    stringNumber = str(sayi)
+
     birler  =   [ "" , "Bir" , "İki" , "Üç" , "Dört" , "Beş" , "Altı" , "Yedi" , "Sekiz" , "Dokuz" ]
     onlar  = [ "" , "On" , "Yirmi" , "Otuz" , "Kırk" , "Elli" , "Altmış" , "Yetmiş" , "Seksen" , "Doksan" ]
     
-    birlerBasamagi = sayi % 10
-    onlarBasamagi = sayi // 10
-
-    return onlar[onlarBasamagi] + " " + birler[birlerBasamagi]
+    return onlar[int(stringNumber[0])] + " " + birler[int(stringNumber[1])]
 
 def sayiAtama(sayi):
     if (sayi < 10 or sayi > 99):
-        print("Lutfen 2 basamaklı bir sayı giriniz")
+        print("Lütfen 2 basamaklı bir sayı giriniz.")
+        return "";
 
     return sayiOkunusu(sayi)
 
@@ -53,22 +70,22 @@ def harfNotuHesaplama(vize1, vize2, final):
 def main():
     print("Secenekler: \n1 - Bolunen sayi bulma\n2 - Sayı okunuşu\n3 - Harf notu hesaplama")
 
-    secenek = int(input("Seçim yapınız: "))
+    secenek = sayiKontrol(input("Seçim yapınız: "), "menu")
 
     if (secenek == 1):
-        min_sayi = int(input("Min Sayi:"))
-        max_sayi = int(input("Max Sayi:"))
-        bolunecekSayi = int(input("Bölünecek Sayı:"))
+        min_sayi = sayiKontrol(input("Min Sayi:"))
+        max_sayi = sayiKontrol(input("Max Sayi:"))
+        bolunecekSayi = sayiKontrol(input("Bölünecek Sayı:"))
         
         print(bolunenSayiBulma(min_sayi, max_sayi, bolunecekSayi))
     elif (secenek == 2):
-        sayi = int(input("Okunuşu gösterilecek sayı:"))
+        sayi = sayiKontrol(input("Okunuşu gösterilecek sayı:"))
 
         print(sayiAtama(sayi))
     elif (secenek == 3):
-        vize1 = int(input("Vize 1:"))
-        vize2 = int(input("Vize 2:"))
-        final = int(input("Final:"))
+        vize1 = sayiKontrol(input("Vize 1:"), "harfNotu")
+        vize2 = sayiKontrol(input("Vize 2:"), "harfNotu")
+        final = sayiKontrol(input("Final:"), "harfNotu")
 
         print(harfNotuHesaplama(vize1, vize2, final))
 
