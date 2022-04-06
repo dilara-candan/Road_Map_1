@@ -4,11 +4,8 @@ def sayiKontrol (value, type = None):
 
     value = int(value)
 
-    if (
-        (type == "harfNotu" and value >= 0 and value <= 100) or 
-        (type == "menu" and value > 0 and value < 4) or
-        type == None
-        ):
+    if ((type == "harfNotu" and value >= 0 and value <= 100) or 
+        (type == "menu" and value > 0 and value < 4) or type == None):
         return value
     
     return sayiKontrol(input("Tekrar giriniz:"), type)
@@ -78,10 +75,12 @@ def main():
         bolunecekSayi = sayiKontrol(input("Bölünecek Sayı:"))
         
         print(bolunenSayiBulma(min_sayi, max_sayi, bolunecekSayi))
+        
     elif (secenek == 2):
         sayi = sayiKontrol(input("Okunuşu gösterilecek sayı:"))
 
         print(sayiAtama(sayi))
+        
     elif (secenek == 3):
         vize1 = sayiKontrol(input("Vize 1:"), "harfNotu")
         vize2 = sayiKontrol(input("Vize 2:"), "harfNotu")
